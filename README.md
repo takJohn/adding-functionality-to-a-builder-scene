@@ -86,12 +86,12 @@ let EndRot = Quaternion.Euler(0, -180, 0)
 
 // Toggle door to its open / close positions
 fencePicketDoor_01.addComponent(new utils.ToggleComponent(utils.ToggleState.Off, value =>{
-	if (value == utils.ToggleState.On){
-		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(StartRot, EndRot, 0.5))
-	}
-	else{
-		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(EndRot, StartRot, 0.5))
-	}
+  if (value == utils.ToggleState.On){
+    fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(StartRot, EndRot, 0.5))
+  }
+  else {
+    fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(EndRot, StartRot, 0.5))
+  }
 }))
 
 // Listen for click on the door and toggle it's state
@@ -102,8 +102,8 @@ fencePicketDoor_01.addComponent(new OnClick(event => {
 
   // Check if door is at its start or end positions before toggling
   if(doorRotY == StartRot.y || doorRotY == EndRot.y)
-	  fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
-
+    fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
+}
 ```
 
 ## Final thoughts
