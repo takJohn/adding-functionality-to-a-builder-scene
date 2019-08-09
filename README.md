@@ -1,4 +1,4 @@
-# Adding Basic Functionality to a Builder Scene
+# Adding Functionality to a Builder Scene
 
 _A screenshot of the scene inside Decentraland._
 
@@ -18,7 +18,7 @@ Please make sure you have the latest version of the Decentraland SDK installed b
 npm install -g decentraland
 ```
 
-You will also need to download the scene files from this [link](...), which is a scene created directly from the Builder. Once downloaded, extract it to its own folder. 
+You will also need to download the scene files from this [link](https://github.com/takJohn/adding-functionality-to-a-builder-scene/blob/master/assets/Pavilion_Stone_Fountain_-_Tutorial.zip) which is a scene created directly from the Builder. Once downloaded, extract it to its own folder. 
 
 If you prefer to use your own scene to follow along then by all means go ahead, in which case you can use the steps below as a general guideline on how to implement functionality to a scene created from the Builder. 
 
