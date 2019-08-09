@@ -122,7 +122,7 @@ fencePicketDoor_01.addComponent(
 
 The scene should now be working as intended, if you were just reading along and would like to explore the scene still then you can find it [here](https://explorer.decentraland.org/?position=-149%2C-146).
 
-![screenshot](https://github.com/takJohn/pavilion-stone-fountain-door-guide/blob/master/screenshots/pavilion-stone-fountain-screen.jpg)
+![screenshot](https://github.com/takJohn/pavilion-stone-fountain-door-guide/blob/master/screenshots/pavilion-stone-fountain-end-screen-cropped.jpg)
 
 Using the Builder to navigate around and position items in your scene is a lot more intuitive than doing it purely by code. Hopefully this guide has shown you the possibilities when they are used together and how even a little interactivity can go a long way in adding interest to your scene. In the near future, Builder assets will be optimized to load more quickly inside of Decentraland, which provides another added benefit to those that wish to develop their scenes in conjunction with the Builder. 
 
