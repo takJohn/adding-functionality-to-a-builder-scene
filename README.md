@@ -1,4 +1,4 @@
-# Pavilion Stone Fountain - Gate Tutorial
+# Adding Basic Functionality to a Builder Scene
 
 _A screenshot of the scene inside Decentraland._
 
@@ -8,7 +8,7 @@ Please feel free to explore the scene [here](https://explorer.decentraland.org/?
 
 ## What this tutorial will cover
 
-The [Builder](https://builder.decentraland.org) provides an easy way for anyone to design and develop a scene that can then be deployed inside of Decentraland. In this tutorial, we will be adding basic interactivity to one of these scenes as well as making use of the new [utils](https://github.com/decentraland/decentraland-ecs-utils) library, which includes a number of pre-built tools that simplifies the process of adding common functionality to your scene.
+The [Builder](https://builder.decentraland.org) provides an easy way for anyone to design and develop a scene that can then be deployed inside of Decentraland. In this tutorial, we will be adding basic interactivity to one of these scenes as well as making use of the new [Utils](https://github.com/decentraland/decentraland-ecs-utils) library, which includes a number of pre-built tools that simplifies the process of adding common functionality to your scene.
 
 ## Before we start
 
@@ -37,19 +37,20 @@ This will install any dependencies and automatically open your default browser t
 
 ## Transforming items
 
-Notice that the gate doesn't quite fill the gap between the fences. One of the things that we can do in code and that currently isn't available in the Builder is being able to scale items. To achieve this, we will be modifying the ```transform``` component of the gate by doing the following:
+Notice that the door doesn't quite fill the gap between the fences. One of the things that we can do in code and that currently isn't available in the Builder is being able to scale items. To achieve this, we will be modifying the ```transform``` component of the door by doing the following:
 
 * Open ```game.ts``` that's located in the ```/src``` directory
 * Scroll down until you find ```fencePicketDoor_01``` or just perform a search for the term
 * Modify the corresponding ```transform``` component, in this case ```transform_31```
 
 ```ts
-/// --- Adding Basic Interactivity to Gate ---
+/// --- Adding Basic Interactivity to Door ---
 const fencePicketDoor_01 = new Entity()
 fencePicketDoor_01.setParent(scene)
 const gltfShape_16 = new GLTFShape('models/FencePicketDoor_01/FencePicketDoor_01.glb')
 fencePicketDoor_01.addComponentOrReplace(gltfShape_16)
-// Scale and position the gate
+
+// Scale and position the door
 const transform_31 = new Transform({
   position: new Vector3(6.65, 0, 0.5),
   rotation: Quaternion.Euler(0, -90, 0),
@@ -59,51 +60,63 @@ fencePicketDoor_01.addComponentOrReplace(transform_31)
 engine.addEntity(fencePicketDoor_01)
 ```
 
-Here we've already found some values that work but in your own scenes you may have to play around to see what works for you.
+Here we've already found some values that work but in your own scenes you may have to play around a bit to see what works for you. In short, the door's position and scale has been adjusted to fit the space in-between the fence. We've also replaced the ```Quaternion``` values for rotation with its ```Euler``` equivalent, which will be important later on when it comes to rotating the door, at least in the sense that we will be able to understand it better conceptually.
 
 _TIP: The code from the builder can be really long as each item in the scene generates a new block of code. To make locating an item in the code easier, you can return to the Builder and hover your mouse cursor over an item you wish to search for within the "Item Catalog" and a tooltip will popup giving you a hint of some search terms you can use._
 
 ## Using the Utils library
 
-It is time to add some functionality to the scene and for that we are going to be making use of the new Utils library but first it's recommended that you exit the preview server before running the following command in your scene's project folder:
+It is time to add some functionality to the scene and as mentioned at the start, we are going to be making use of the new Utils library. If you haven't yet exited the preview server then please do so before installing the Utils library, which can be done by running the following command in your scene's project folder:
 
 ```npm install decentraland-ecs-utils```
 
-Now import the library into the scene's script and add this line at the start of your ```game.ts file```.
+To import the library into the scene's script, add this line at the start of your ```game.ts``` file.
 
 ```ts
 import utils from ".../node_modules/decentraland-ecs-utils/index"
 ```
 
-## Opening the gate
+We will only be using a few of the available helpers in this library and if you're interested to learn more then please follow this [link](https://github.com/decentraland/decentraland-ecs-utils).
+
+## Opening the door
+
+Right now, users can't access the garden without having to jump over the fence so our aim is to have the door open and close whenever the user clicks on it. It's also worth noting that the door has already been rotated by ```-90``` degrees in the y-axis when it was originally placed inside the Builder. Earlier we converted the ```Quaternion``` values for the rotation to its ```Euler``` equivalent, which now becomes our start rotation. For our end rotation, we will need to rotate by another ```-90``` degrees so that it opens inwards making its final y-axis value to be ```-180``` degrees. 
+
+```ts
+// Define start and end rotations for the door
+let StartRot = Quaternion.Euler(0, -90, 0)
+let EndRot = Quaternion.Euler(0, -180, 0)
+```
 
 TBC
 
 ```ts
-// Define start and end rotations for toggling the door
-let StartRot = Quaternion.Euler(0, -90, 0)
-let EndRot = Quaternion.Euler(0, -180, 0)
-
 // Toggle door to its open / close positions
-fencePicketDoor_01.addComponent(new utils.ToggleComponent(utils.ToggleState.Off, value =>{
-  if (value == utils.ToggleState.On){
-    fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(StartRot, EndRot, 0.5))
-  }
-  else {
-    fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(EndRot, StartRot, 0.5))
-  }
-}))
+fencePicketDoor_01.addComponent(
+  new utils.ToggleComponent(utils.ToggleState.Off, value => {
+    if (value == utils.ToggleState.On) {
+      fencePicketDoor_01.addComponentOrReplace(
+        new utils.RotateTransformComponent(StartRot, EndRot, 0.5)
+      );
+    } else {
+      fencePicketDoor_01.addComponentOrReplace(
+        new utils.RotateTransformComponent(EndRot, StartRot, 0.5)
+      );
+    }
+  })
+);
 
-// Listen for click on the door and toggle it's state
-fencePicketDoor_01.addComponent(new OnClick(event => {
+// Listen for click on the door and toggle its state
+fencePicketDoor_01.addComponent(
+  new OnClick(event => {
+    // Adding an intermediate variable
+    let doorRotY = fencePicketDoor_01.getComponent(Transform).rotation.y;
 
-  // Adding an intermediate variable
-  let doorRotY = fencePicketDoor_01.getComponent(Transform).rotation.y
-
-  // Check if door is at its start or end positions before toggling
-  if(doorRotY == StartRot.y || doorRotY == EndRot.y)
-    fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
-}
+    // Check if door is at its start or end positions before toggling
+    if (doorRotY == StartRot.y || doorRotY == EndRot.y)
+      fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle();
+  })
+);
 ```
 
 ## Final thoughts
@@ -115,6 +128,7 @@ Using the Builder to navigate around and position items in your scene is a lot m
 - Decentraland's Builder (https://builder.decentraland.org/)
 - Decentraland's Utils library (https://github.com/decentraland/decentraland-ecs-utils)
 - Installationi guide for Decentraland's CLI and SDK (https://docs.decentraland.org/getting-started/installation-guide/)
+- Setting entity positions (https://docs.decentraland.org/development-guide/entity-positioning/)
 - Documentation for Decentraland's SDK (https://docs.decentraland.org)
 
 ## Copyright info

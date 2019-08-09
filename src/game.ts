@@ -343,11 +343,13 @@ const transform_30 = new Transform({
 log_03.addComponentOrReplace(transform_30)
 engine.addEntity(log_03)
 
-/// --- Adding Basic Interactivity to the Picket Door ---
+/// --- Adding Basic Interactivity to the Door ---
 const fencePicketDoor_01 = new Entity()
 fencePicketDoor_01.setParent(scene)
 const gltfShape_16 = new GLTFShape('models/FencePicketDoor_01/FencePicketDoor_01.glb')
 fencePicketDoor_01.addComponentOrReplace(gltfShape_16)
+
+// Scale and position the door
 const transform_31 = new Transform({
   position: new Vector3(6.65, 0, 0.5),
   rotation: Quaternion.Euler(0, -90, 0),
@@ -356,7 +358,7 @@ const transform_31 = new Transform({
 fencePicketDoor_01.addComponentOrReplace(transform_31)
 engine.addEntity(fencePicketDoor_01)
 
-// Define start and end rotations for toggling the door
+// Define start and end rotations for the door
 let StartRot = Quaternion.Euler(0, -90, 0)
 let EndRot = Quaternion.Euler(0, -180, 0)
 
@@ -370,7 +372,7 @@ fencePicketDoor_01.addComponent(new utils.ToggleComponent(utils.ToggleState.Off,
 	}
 }))
 
-// Listen for click on the door and toggle it's state
+// Listen for click on the door and toggle its state
 fencePicketDoor_01.addComponent(new OnClick(event => {
 
   // Adding an intermediate variable

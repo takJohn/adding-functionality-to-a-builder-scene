@@ -1,7 +1,7 @@
 {
-  "name": "pavilion-stone-fountain-gate-tutorial",
+  "name": "adding-functionality-to-a-builder-scene",
   "version": "1.0.0",
-  "description": "Adding basic interactivity to a builder scene",
+  "description": "Adding functionality to a builder scene",
   "scripts": {
     "start": "dcl start",
     "build": "build-ecs",
