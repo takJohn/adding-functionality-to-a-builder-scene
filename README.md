@@ -93,10 +93,10 @@ TBC
 fencePicketDoor_01.addComponent(
   new utils.ToggleComponent(utils.ToggleState.Off, value => {
     if (value == utils.ToggleState.On) {
-      log("Open door");
+      log("Open door")
     } 
     else {
-      log("Close door");
+      log("Close door")
     }
   })
 )
