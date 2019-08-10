@@ -359,16 +359,16 @@ fencePicketDoor_01.addComponentOrReplace(transform_31)
 engine.addEntity(fencePicketDoor_01)
 
 // Define start and end rotations for the door
-let StartRot = Quaternion.Euler(0, -90, 0)
-let EndRot = Quaternion.Euler(0, -180, 0)
+let startRot = Quaternion.Euler(0, -90, 0)
+let endRot = Quaternion.Euler(0, -180, 0)
 
 // Toggle door to its open / close positions
 fencePicketDoor_01.addComponent(new utils.ToggleComponent(utils.ToggleState.Off, value =>{
 	if (value == utils.ToggleState.On){
-		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(StartRot, EndRot, 0.5))
+		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(startRot, endRot, 0.5))
 	}
 	else{
-		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(EndRot, StartRot, 0.5))
+		fencePicketDoor_01.addComponentOrReplace(new utils.RotateTransformComponent(endRot, startRot, 0.5))
 	}
 }))
 
@@ -379,7 +379,7 @@ fencePicketDoor_01.addComponent(new OnClick(event => {
   let doorRotY = fencePicketDoor_01.getComponent(Transform).rotation.y
 
   // Check if door is at its start or end positions before toggling
-  if(doorRotY == StartRot.y || doorRotY == EndRot.y)
+  if(doorRotY == startRot.y || doorRotY == endRot.y)
 	  fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
 }))
 

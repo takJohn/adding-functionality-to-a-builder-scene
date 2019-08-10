@@ -19,7 +19,6 @@ You will also need to download the Builder scene files from this [link](https://
 
 If you prefer to use your own scene to follow along then by all means go ahead, in which case you can use the steps below as a general guideline on how to implement functionality to a scene created from the Builder. 
 
-
 ## Running the scene
 
 Let's familiarise ourselves with the scene we're working with before diving into the code. Inside the terminal, run the following command in the directory we've just extracted to: 
@@ -65,7 +64,7 @@ _TIP: The code from the builder can be really long as each item in the scene gen
 
 It is time to add some functionality to the scene and for that we're going to be making use of the new [Utils](https://github.com/decentraland/decentraland-ecs-utils) library, which includes a number of pre-built tools that simplifies the process of adding common functionality to your scene.
 
- If you haven't yet exited the preview server then please do so before installing the Utils library, which can be done by running the following command in your scene's project folder:
+If you haven't yet exited the preview server then please do so before installing the Utils library, which can be done by running the following command in your scene's project folder:
 
 ```npm install decentraland-ecs-utils```
 
@@ -79,12 +78,28 @@ We will only be using a few of the available helpers in this library but if you'
 
 ## Opening the door
 
-Right now, users can't access the garden without having to jump over the fence so our aim is to have the door open and close whenever the user clicks on it. It's also worth noting that the door has already been rotated by ```-90``` degrees in the y-axis when it was originally placed inside the Builder. Earlier we converted the ```Quaternion``` values for the rotation to its ```Euler``` equivalent, which now becomes our start rotation. For our end rotation, we will need to rotate by another ```-90``` degrees so that it opens inwards making its final y-axis value to be ```-180``` degrees. 
+Right now, users can't access the garden without having to jump over the fence so our aim is to have the door open and close whenever the user clicks on it. It's also worth noting that the door has already been rotated by ```-90``` degrees in the y-axis when it was originally placed inside the Builder. Earlier we converted the ```Quaternion``` values for the rotation to its ```Euler``` equivalent, which now becomes our starting rotation. For our end rotation, we will need to rotate by another ```-90``` degrees so that it opens inwards making its final y-axis value to be ```-180``` degrees. 
 
 ```ts
 // Define start and end rotations for the door
-let StartRot = Quaternion.Euler(0, -90, 0)
-let EndRot = Quaternion.Euler(0, -180, 0)
+let startRot = Quaternion.Euler(0, -90, 0)
+let endRot = Quaternion.Euler(0, -180, 0)
+```
+
+TBC
+
+```ts
+// Toggle door to its open / close positions
+fencePicketDoor_01.addComponent(
+  new utils.ToggleComponent(utils.ToggleState.Off, value => {
+    if (value == utils.ToggleState.On) {
+      log("Open door");
+    } 
+    else {
+      log("Close door");
+    }
+  })
+)
 ```
 
 TBC
@@ -95,27 +110,42 @@ fencePicketDoor_01.addComponent(
   new utils.ToggleComponent(utils.ToggleState.Off, value => {
     if (value == utils.ToggleState.On) {
       fencePicketDoor_01.addComponentOrReplace(
-        new utils.RotateTransformComponent(StartRot, EndRot, 0.5)
-      );
-    } else {
+        new utils.RotateTransformComponent(startRot, endRot, 0.5)
+      )
+    } 
+    else {
       fencePicketDoor_01.addComponentOrReplace(
-        new utils.RotateTransformComponent(EndRot, StartRot, 0.5)
-      );
+        new utils.RotateTransformComponent(endRot, startRot, 0.5)
+      )
     }
   })
-);
+)
+```
 
+
+Adding a listener
+
+```ts
+// Listen for click on the door and toggle its state
+fencePicketDoor_01.addComponent(new OnClick(event=>{
+  fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
+}))
+```
+
+You may have spotted a slight issue when you tried to click on the door before it's finished rotating. Instead of smoothly transitioning between the opened and closed state, it snaps to a position before rotating again. A simple fix for that is to only allow the user to click on the door when it has completed one of its rotation movements. This can be done by checking if the door's y-axis rotation is the same as ```startRot``` or ```endRot```:
+
+```ts
 // Listen for click on the door and toggle its state
 fencePicketDoor_01.addComponent(
   new OnClick(event => {
     // Adding an intermediate variable
-    let doorRotY = fencePicketDoor_01.getComponent(Transform).rotation.y;
+    let doorRotY = fencePicketDoor_01.getComponent(Transform).rotation.y
 
     // Check if door is at its start or end positions before toggling
-    if (doorRotY == StartRot.y || doorRotY == EndRot.y)
-      fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle();
+    if (doorRotY == startRot.y || doorRotY == endRot.y)
+      fencePicketDoor_01.getComponent(utils.ToggleComponent).toggle()
   })
-);
+)
 ```
 
 ## Final thoughts
