@@ -37,7 +37,7 @@ As mentioned earlier, users can't access the garden without having to jump over 
 
 ## Transforming items
 
-Let’s start by doing some tidying up on the door so that it fills in the gaps between the fences. One of the things that we can do in code and that currently isn't possible in the Builder, is being able to scale items. To achieve this, we will be modifying the ```transform``` component of the door by doing the following:
+Let’s start by doing some tidying up on the door so that it fills in the gaps between the fences. One of the things that we can do in code and that currently isn't possible in the Builder, is being able to scale items. To achieve this, we will be modifying the ```Transform``` component of the door by doing the following:
 
 * Open ```game.ts``` that's located in the ```/src``` directory
 * Scroll down until you find ```fencePicketDoor_01``` or just perform a search for the term
