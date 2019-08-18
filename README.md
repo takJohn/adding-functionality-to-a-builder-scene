@@ -162,7 +162,7 @@ fencePicketDoor_01.addComponent(
 )
 ```
 
-Here we went with a half a second duration for the opening and closing of the door, which feels fairly snappy but I encourage you to play around with these values so that you can choose whatever feels right to you.
+Here we went with a ```0.5``` second duration for the opening and closing of the door, which feels fairly snappy but I encourage you to play around with these values so that you can choose whatever feels right to you.
 
 ## Finishing touches
 
