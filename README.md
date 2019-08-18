@@ -118,7 +118,7 @@ fencePicketDoor_01.addComponent(new OnClick(event=>{
 }))
 ```
 
-The function that’s executed by the OnClick component changes the ToggleState back and forth between On and Off. Although you won’t be able to see any changes happening visually in the scene, if you open up your browser’s console you should see messages alternating between Open and Close every time you click on the door.
+The function that’s executed by the ```OnClick``` component changes the ```ToggleState``` back and forth between ```On``` and ```Off```. Although you won’t be able to see any changes happening visually in the scene, if you open up your browser’s console you should see messages alternating between ```Open``` and ```Close``` every time you click on the door.
 
 _TIP: Accessing the browser’s console varies between browsers, for Chrome you use the keyboard shortcut_ <kbd>CTRL</kbd> + <kbd>SHIFT</kbd> + <kbd>J</kbd> _(on Windows) or_ <kbd>CTRL</kbd> + <kbd>OPTION</kbd> + <kbd>J</kbd> _(on Mac)_
 
