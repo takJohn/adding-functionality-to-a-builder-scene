@@ -89,7 +89,7 @@ The first component from the Utils library we'll be using is the ```ToggleCompon
 The ```ToggleComponent``` takes in two arguments:
 
 * ```startingState```: Starting state of the toggle (```On``` or ```Off```)
-* ```onValueChangedCallback```: Function to call every time the toggle state changed
+* ```onValueChangedCallback```: Function to call every time the toggle state changes
 
 Seeing as the door starts off being closed, we’ll set the ```startingState``` to ```ToggleState.Off``` and whenever the state changes, the function will just log a message to the console describing the action we would like to perform. This way we can check that the toggle is working as expected before implementing the action of opening and closing the door.
 
