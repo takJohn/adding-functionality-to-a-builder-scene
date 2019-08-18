@@ -70,7 +70,9 @@ It’s nearly time to add some functionality to the scene and for that we're goi
 If you haven't yet exited the preview server then please do so before installing the Utils library, which can be done by running the following command in your scene's project folder:
 
 
-```npm install decentraland-ecs-utils```
+```
+npm install decentraland-ecs-utils
+```
 
 To import the library into the scene's script, add this line at the start of your ```game.ts``` file.
 
