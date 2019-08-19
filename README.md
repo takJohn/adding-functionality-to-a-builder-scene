@@ -196,7 +196,7 @@ Using the Builder to navigate around and position items in your scene is a lot m
 
 - Decentraland's Builder (https://builder.decentraland.org/)
 - Decentraland's Utils library (https://github.com/decentraland/decentraland-ecs-utils)
-- Installationi guide for Decentraland's CLI and SDK (https://docs.decentraland.org/getting-started/installation-guide/)
+- Installation guide for Decentraland's CLI and SDK (https://docs.decentraland.org/getting-started/installation-guide/)
 - Setting entity positions (https://docs.decentraland.org/development-guide/entity-positioning/)
 - Documentation for Decentraland's SDK (https://docs.decentraland.org)
 
